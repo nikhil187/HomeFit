@@ -3,23 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fitness Trainer</title>
+    <title>HomeFit</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Fitness Trainer</h1>
+            <h1>HomeFit</h1>
             <p>AI-powered exercise tracking and feedback</p>
         </header>
         
         <div class="main-content">
             <div class="video-container">
-                <img id="video" src="{{ url_for('video_feed') }}" alt="Fitness Tracker Video Feed">
+                <img id="video" src="{{ url_for('video_feed') }}" alt="HomeFit Video Feed">
             </div>
             
             <div class="controls">
+                <div class="mode-selection">
+                    <h2>Choose Mode</h2>
+                    <div class="mode-tabs">
+                        <button class="mode-tab active" data-mode="live">Live Camera</button>
+                        <button class="mode-tab" data-mode="upload">Upload Video</button>
+                    </div>
+                </div>
+                
+                <div id="live-mode" class="mode-content active">
                 <div class="exercise-selection">
                     <h2>Select Exercise</h2>
                     <div class="exercise-options">
@@ -71,6 +80,47 @@
                         <div class="status-item">
                             <span class="status-label">Repetitions:</span>
                             <span id="current-reps" class="status-value">0 / 0</span>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                
+                <div id="upload-mode" class="mode-content">
+                    <div class="video-upload-section">
+                        <h2>Upload Video for Analysis</h2>
+                        <div class="upload-container">
+                            <div class="upload-area" id="upload-area">
+                                <input type="file" id="video-file-input" accept="video/*" style="display: none;">
+                                <div class="upload-placeholder">
+                                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                        <polyline points="17 8 12 3 7 8"></polyline>
+                                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                                    </svg>
+                                    <p>Click to upload or drag and drop</p>
+                                    <p class="upload-hint">Supports MP4, AVI, MOV formats</p>
+                                </div>
+                            </div>
+                            <div class="upload-exercise-selection">
+                                <label for="upload-exercise-type">Exercise Type:</label>
+                                <select id="upload-exercise-type">
+                                    <option value="squat">Squat</option>
+                                    <option value="push_up">Push Up</option>
+                                    <option value="hammer_curl">Hammer Curl</option>
+                                </select>
+                            </div>
+                            <button id="analyze-btn" class="btn primary-btn" disabled>Analyze Video</button>
+                            <div id="upload-progress" class="upload-progress" style="display: none;">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="progress-fill"></div>
+                                </div>
+                                <p id="progress-text">Processing video...</p>
+                            </div>
+                        </div>
+                        <div id="analysis-results" class="analysis-results" style="display: none;">
+                            <h3>Analysis Results</h3>
+                            <div id="results-content"></div>
+                            <video id="processed-video" controls style="display: none; width: 100%; max-width: 800px; margin-top: 20px;"></video>
                         </div>
                     </div>
                 </div>

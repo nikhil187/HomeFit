@@ -8,11 +8,11 @@ from feedback.information import get_exercise_info
 from utils.draw_text_with_background import draw_text_with_background
 
 def main():
-    video_path = r"C:\Users\yakupzengin\Fitness-Trainer\data\squat.mp4"
-    video_path = r"C:\Users\yakupzengin\Fitness-Trainer\data\push_up.mp4"
-    video_path = r"C:\Users\yakupzengin\Fitness-Trainer\data\dumbel-workout.mp4"
+    video_path = r"C:\Users\yakupzengin\HomeFit\data\squat.mp4"
+    video_path = r"C:\Users\yakupzengin\HomeFit\data\push_up.mp4"
+    video_path = r"C:\Users\yakupzengin\HomeFit\data\dumbel-workout.mp4"
 
-    exercise_type = "hammer_curl"  # Egzersiz türünü belirleyin ("hammer_curl", "squat", "push_up")
+    exercise_type = "hammer_curl"  # Exercise type ("hammer_curl", "squat", "push_up")
 
     cap = cv2.VideoCapture(0)
     pose_estimator = PoseEstimator()
@@ -30,7 +30,7 @@ def main():
     exercise_info = get_exercise_info(exercise_type)
 
     fourcc = cv2.VideoWriter_fourcc(*'XVID')
-    output_file = r"C:\Users\yakupzengin\Fitness-Trainer\output\push-up.avi"
+    output_file = r"C:\Users\yakupzengin\HomeFit\output\push-up.avi"
     fps = cap.get(cv2.CAP_PROP_FPS)
     frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
@@ -44,18 +44,20 @@ def main():
         results = pose_estimator.estimate_pose(frame, exercise_type)
         if results.pose_landmarks:
             if exercise_type == "squat":
-                counter, angle, stage = exercise.track_squat(results.pose_landmarks.landmark, frame)
-                layout_indicators(frame, exercise_type, (counter, angle, stage))
+                counter, angle, stage, suggestions = exercise.track_squat(results.pose_landmarks.landmark, frame)
+                layout_indicators(frame, exercise_type, (counter, angle, stage, suggestions))
             elif exercise_type == "hammer_curl":
                 (counter_right, angle_right, counter_left, angle_left,
-                 warning_message_right, warning_message_left, progress_right, progress_left, stage_right, stage_left) = exercise.track_hammer_curl(
+                 warning_message_right, warning_message_left, progress_right, progress_left, 
+                 stage_right, stage_left, suggestions_right, suggestions_left) = exercise.track_hammer_curl(
                     results.pose_landmarks.landmark, frame)
                 layout_indicators(frame, exercise_type,
                                   (counter_right, angle_right, counter_left, angle_left,
-                                   warning_message_right, warning_message_left, progress_right, progress_left, stage_right, stage_left))
+                                   warning_message_right, warning_message_left, progress_right, progress_left, 
+                                   stage_right, stage_left, suggestions_right, suggestions_left))
             elif exercise_type == "push_up":
-                counter, angle, stage = exercise.track_push_up(results.pose_landmarks.landmark, frame)
-                layout_indicators(frame, exercise_type, (counter, angle, stage))
+                counter, angle, stage, suggestions = exercise.track_push_up(results.pose_landmarks.landmark, frame)
+                layout_indicators(frame, exercise_type, (counter, angle, stage, suggestions))
 
         draw_text_with_background(frame, f"Exercise: {exercise_info.get('name', 'N/A')}", (40, 50),
                                   cv2.FONT_HERSHEY_DUPLEX, 0.7, (255, 255, 255,), (118, 29, 14, 0.79), 1)
