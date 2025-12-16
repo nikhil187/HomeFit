@@ -83,12 +83,4 @@ fitness-trainer-pose-estimation/
 4. **Rep Counting**: Counts repetitions when full range of motion is completed
 5. **Form Feedback**: Provides real-time suggestions based on biomechanics research
 
-## Accuracy
 
-- Angle precision: ±2°
-- Rep counting accuracy: 98%+ (with proper form)
-- Pose detection: 95%+ (MediaPipe benchmark)
-
-## License
-
-MIT License
