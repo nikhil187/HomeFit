@@ -15,7 +15,7 @@ A real-time exercise tracking system using computer vision that provides form fe
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/nikhil187/HomeFit.git
 cd fitness-trainer-pose-estimation
 ```
 
