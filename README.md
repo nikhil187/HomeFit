@@ -83,4 +83,18 @@ fitness-trainer-pose-estimation/
 4. **Rep Counting**: Counts repetitions when full range of motion is completed
 5. **Form Feedback**: Provides real-time suggestions based on biomechanics research
 
+## Deployment
 
+This app is deployed on Render. To deploy your own instance:
+
+1. Fork this repository
+2. Create a free account on [Render](https://render.com)
+3. Click "New" → "Web Service"
+4. Connect your GitHub repository
+5. Render will auto-detect the configuration and deploy
+
+**Live Demo**: [HomeFit on Render](https://homefit.onrender.com)
+
+## License
+
+MIT License
