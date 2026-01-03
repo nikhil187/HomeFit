@@ -652,10 +652,12 @@ def debug_video(file_id):
 
 if __name__ == '__main__':
     try:
-        logger.info("Starting the Flask application on http://127.0.0.1:5000")
+        port = int(os.environ.get('PORT', 5000))
+        debug_mode = os.environ.get('FLASK_DEBUG', 'True').lower() == 'true'
+        logger.info(f"Starting the Flask application on http://127.0.0.1:{port}")
         print("Starting HomeFit app, please wait...")
-        print("Open http://127.0.0.1:5000 in your web browser when the server starts")
-        app.run(debug=True)
+        print(f"Open http://127.0.0.1:{port} in your web browser when the server starts")
+        app.run(host='0.0.0.0', port=port, debug=debug_mode)
     except Exception as e:
         logger.error(f"Failed to start application: {e}")
         traceback.print_exc()
